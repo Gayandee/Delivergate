@@ -202,4 +202,4 @@ elif page == "Data Analysis":
 
 # Run the app
 if __name__ == '__main__':
-    st.write("Streamlit app is running!")
+    st.write("Gayandee Rajapaksha!")
