@@ -71,7 +71,7 @@ SHOW TABLES;
 ## Loading the Data
 Ensure you have the `customers.csv` and `orders.csv` files in the same directory as your application code.
 
-The application includes the code to load the data into the MySQL database. It connects to the database(using your DB password) and imports the CSV files:
+The application includes the code to load the data into the MySQL database. It connects to the database (using your DB password) and imports the CSV files:
 
 ```python
 import pandas as pd
