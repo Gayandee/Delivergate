@@ -14,7 +14,7 @@ import altair as alt
 st.set_page_config(page_title="Customer Purchase", layout="centered")
 
 # Thus creates a connection to the MySQL database as before
-engine = create_engine('mysql+pymysql://root:<password>@localhost:3306/delivergate')
+engine = create_engine('mysql+pymysql://root:HEARTstrings1*@localhost:3306/delivergate')
 
 # These SQL queries to select all data from the customers and orders tables.
 customers_query = "SELECT * FROM customers;"
