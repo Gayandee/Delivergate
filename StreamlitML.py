@@ -33,7 +33,7 @@ if page == "Dashboard":
 
     # Converted the order_date column in the orders DataFrame to a datetime format. 
     # This feature engineering approch will effect for the accuracy.
-    orders_df['order_date'] = pd.to_datetime(orders_df['order_date'])
+    orders_df['order_date'] = pd.to_datetime(orders_df['order_date']).dt.date
     
     # Get the min and max dates
     min_date = orders_df['order_date'].min()
@@ -44,14 +44,11 @@ if page == "Dashboard":
         st.error("No valid dates available in the dataset.")
     else:
         # Get the date range from the user
-        date_range = st.sidebar.date_input("Select Date Range", [min_date.date(), max_date.date()])
+        date_range = st.sidebar.date_input("Select Date Range", [min_date, max_date])
 
         # Validated that the date range selected is in the correct format (a list or tuple with two items)
         if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
             start_date, end_date = date_range
-
-            start_date = pd.to_datetime(start_date)
-            end_date = pd.to_datetime(end_date)
         else:
             st.error("Please select a valid date range.")
 
@@ -97,10 +94,19 @@ if page == "Dashboard":
     st.subheader("Top 10 Customers by Total Revenue")
     st.bar_chart(top_customers)
 
+
     # Total revenue over time (grouped by month)
+
+    # Ensure the order_date column is in datetime format
+    orders_df['order_date'] = pd.to_datetime(orders_df['order_date']).dt.date 
+
+    # When filtering and preparing the data, convert back to datetime for grouping
+    filtered_orders['order_date'] = pd.to_datetime(filtered_orders['order_date'])
+
     revenue_over_time = filtered_orders.groupby(pd.Grouper(key='order_date', freq='M'))['total_amount'].sum()
     st.subheader("Total Revenue Over Time")
     st.line_chart(revenue_over_time)
+
 
 elif page == "Data Analysis":
     st.title("Data Analysis Section")
