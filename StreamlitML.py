@@ -11,10 +11,10 @@ import altair as alt
 
 
 # This code shows the title and layout configuration.
-st.set_page_config(page_title="Customer Purchase Prediction", layout="centered")
+st.set_page_config(page_title="Customer Purchase", layout="centered")
 
 # Thus creates a connection to the MySQL database as before
-engine = create_engine('mysql+pymysql://root:HEARTstrings1*@localhost:3306/delivergate')
+engine = create_engine('mysql+pymysql://root:<password>@localhost:3306/delivergate')
 
 # These SQL queries to select all data from the customers and orders tables.
 customers_query = "SELECT * FROM customers;"
@@ -28,7 +28,7 @@ st.sidebar.header("Navigation")
 page = st.sidebar.radio("Select Page", ("Dashboard", "Data Analysis"))
 
 if page == "Dashboard":
-    # Sidebar Filters
+    # 01 Sidebar Filters
     st.sidebar.header("Filters")
 
     # Converted the order_date column in the orders DataFrame to a datetime format. 
@@ -75,7 +75,7 @@ if page == "Dashboard":
     filtered_customers = customer_counts[customer_counts >= int(order_count)].index
     filtered_orders = filtered_orders[filtered_orders['customer_id'].isin(filtered_customers)]
 
-    # Main dashboard
+    # 02 Main dashboard
     st.title("Customer Orders Dashboard")
 
     # Display filtered data
@@ -152,14 +152,13 @@ elif page == "Data Analysis":
         plt.tight_layout()
         st.pyplot(fig)
 
-        # After making predictions
         st.subheader("Classification Report:")
 
-        # Generate the classification report as a DataFrame
+        # Generated the classification report as a DataFrame
         report = classification_report(y_test, y_pred, output_dict=True)
         report_df = pd.DataFrame(report).transpose()
 
-        # Display the report as a grid in Streamlit
+        # Displayed the report as a grid in Streamlit
         st.dataframe(report_df)
 
         # Total Orders Distribution
